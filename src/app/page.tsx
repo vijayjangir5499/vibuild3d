@@ -36,7 +36,7 @@ export default function Home() {
         
         <div className="flex flex-col items-center space-y-2">
           <div className="text-cyan-400 font-bold tracking-widest uppercase text-sm border border-cyan-400/30 px-3 py-1 rounded-full backdrop-blur-sm">
-            Shriji 3D Tech
+            ViBuild 3D
           </div>
         </div>
 

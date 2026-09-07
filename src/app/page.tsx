@@ -1,9 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
+  const [timeLeft, setTimeLeft] = useState({ days: 50, hours: 12, mins: 45, secs: 30 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const targetDate = new Date("2026-10-28T00:00:00").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: 0, hours: 0, mins: 0, secs: 0 });
+      } else {
+        setTimeLeft({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          mins: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          secs: Math.floor((distance % (1000 * 60)) / 1000)
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,22 +75,29 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="flex gap-4 items-center justify-center pt-4">
-          <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-4 w-20 backdrop-blur-md">
-            <span className="text-3xl font-bold text-white">50</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Days</span>
+        {mounted && (
+          <div className="flex gap-2 sm:gap-4 items-center justify-center pt-4">
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 w-16 sm:w-20 backdrop-blur-md">
+              <span className="text-2xl sm:text-3xl font-bold text-white">{timeLeft.days}</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Days</span>
+            </div>
+            <div className="text-2xl text-gray-600">:</div>
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 w-16 sm:w-20 backdrop-blur-md">
+              <span className="text-2xl sm:text-3xl font-bold text-white">{timeLeft.hours}</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Hours</span>
+            </div>
+            <div className="text-2xl text-gray-600">:</div>
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 w-16 sm:w-20 backdrop-blur-md">
+              <span className="text-2xl sm:text-3xl font-bold text-white">{timeLeft.mins}</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Mins</span>
+            </div>
+            <div className="text-2xl text-gray-600">:</div>
+            <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 w-16 sm:w-20 backdrop-blur-md">
+              <span className="text-2xl sm:text-3xl font-bold text-white">{timeLeft.secs}</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Secs</span>
+            </div>
           </div>
-          <div className="text-2xl text-gray-600">:</div>
-          <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-4 w-20 backdrop-blur-md">
-            <span className="text-3xl font-bold text-white">12</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Hours</span>
-          </div>
-          <div className="text-2xl text-gray-600">:</div>
-          <div className="flex flex-col items-center bg-white/5 border border-white/10 rounded-lg p-4 w-20 backdrop-blur-md">
-            <span className="text-3xl font-bold text-white">45</span>
-            <span className="text-xs text-gray-500 uppercase font-semibold tracking-wider mt-1">Mins</span>
-          </div>
-        </div>
+        )}
 
         <div className="w-full max-w-md mx-auto p-1 bg-white/5 rounded-xl border border-white/10 backdrop-blur-lg mt-8">
           <form onSubmit={handleSubmit} className="flex items-center gap-2 p-1">

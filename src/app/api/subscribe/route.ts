@@ -16,8 +16,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, data: waitlist }, { status: 201 });
-  } catch (error: any) {
-    if (error.code === "P2002") {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === "P2002") {
       return NextResponse.json({ error: "Email already on waitlist!" }, { status: 409 });
     }
     console.error(error);

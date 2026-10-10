@@ -8,8 +8,8 @@
 
 ## 2. Domain purchase account details:
 
-- used namecheap site and used the account user "vedehibuild3d" and email [vijayjangir5499@gmail.com]
-- purchased the domain "vibuild3d.com" on 7/9/2026 10:34 am.
+- used namecheap site and used the account user "vedehibuild3d" and email [jangidaadi1@gmail.com]
+- purchased the domain "vibuild3d.com" on 7/9/2026 06:01 pm.
 
 ## 3. we have built the git repository and vercel account for this using the email [vijayjangir5499@gmail.com].
 
